@@ -12,6 +12,13 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
+require("./models/user");
+require("./models/post");
+
+//register routes
+app.use(require("./routes/auth"));
+app.use(require("./routes/post"));
+app.use(require("./routes/user"));
 
 //establishing Database connection
 mongoose.connect(MONGODBURI, {
