@@ -9,7 +9,8 @@ const { MONGODBURI } = require("./keys");
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://my-blog-application-frontend.vercel.app",
+    // origin: "http://localhost:3000",
   })
 );
 require("./models/user");
