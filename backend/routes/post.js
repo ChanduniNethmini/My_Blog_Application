@@ -138,4 +138,32 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
       }
     });
 });
+
+// Edit a post
+router.put("/editpost/:postId", requireLogin, (req, res) => {
+  Post.findById(req.params.postId).exec((err, post) => {
+    if (err || !post) {
+      return res.status(422).json({ error: err });
+    }
+    if (post.postedBy._id.toString() === req.user._id.toString()) {
+      post.title = req.body.title;
+      post.body = req.body.body;
+      post.photo = req.body.pic;
+
+      post
+        .save()
+        .then((result) => {
+          res.json(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return res
+        .status(401)
+        .json({ error: "You are not authorized to edit this post" });
+    }
+  });
+});
+
 module.exports = router;
